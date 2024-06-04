@@ -1,0 +1,18 @@
+{
+  "name": "graphql-api",
+  "version": "1.0.0",
+  "description": "Learning graphql",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "nodemon ./index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammad AR Zihad",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "colors": "^1.4.0",
+    "graphql": "^16.8.1",
+    "nodemon": "^3.1.3"
+  }
+}
