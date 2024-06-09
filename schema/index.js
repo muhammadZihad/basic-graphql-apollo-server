@@ -1,9 +1,10 @@
-import { gql } from "apollo-server";
 
 
 export const typeDefs = `#graphql
     type Query {
         checkApiStatus: ApiStatus
+        movie(ID: ID!): Movie!
+        getMovies(amount: Int): [Movie]
     }
 
     type ApiStatus {
@@ -11,19 +12,19 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
-        createUser(input: UserInput): User
+        addMovie(movieInput: MovieInput): Movie!
     }
 
-    input UserInput {
-        firstName: String
-        lastName: String
-        email: String
-        password: String
+
+    type Movie {
+        title: String
+        description: String
+        rated: String
     }
 
-    type User {
-        firstName: String
-        lastName: String
-        email: String
+    input MovieInput {
+        title: String,
+        description: String
+        rated: String
     }
 `

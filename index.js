@@ -4,23 +4,25 @@ import { startStandaloneServer } from '@apollo/server/standalone'
 import { typeDefs } from './schema/index.js'
 import { resolvers } from './resolvers/index.js'
 import 'dotenv/config'
+import mongoose, { Mongoose } from 'mongoose'
 
 const API_PORT = process.env.API_PORT || 4000;
+const MONGODB = process.env.DB_CONNECTION_STRING;
 
 const server = new ApolloServer({
     typeDefs,
     resolvers
 })
 
-async function main() {
-    const { url } = await startStandaloneServer(server, {
-        context: async ({ req }) => ({ token: req.headers.token }),
-        listen: { port: API_PORT }
+mongoose.connect(MONGODB)
+    .then(() => {
+        console.log("MongoDB is connected")
+        return startStandaloneServer(server, {
+            context: async ({ req }) => ({ token: req.headers.token }),
+            listen: { port: API_PORT }
+        })
     })
-
-    console.log((`Server is running at: `.green + ` ${url}`.yellow))
-    console.log('Query at:'.magenta + ' https://studio.apollographql.com/dev'.yellow)
-
-}
-
-main()
+    .then((res) => {
+        console.log((`Server is running at: `.green + ` ${res.url}`.yellow))
+        console.log('Query at:'.magenta + ' https://studio.apollographql.com/dev'.yellow)
+    })
